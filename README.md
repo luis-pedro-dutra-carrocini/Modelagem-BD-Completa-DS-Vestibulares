@@ -55,11 +55,11 @@ Observação: Caso o usuário seja um aluno, o seu atributo nível será inserid
 Essas são algumas das funções que o site executará, sendo elas as mais relevantes e as que têm alguma relação com o banco de dados a ser desenvolvido.
 
 ## 📋 2 - Modelagem Conceitual
-<img src="/prints/print1.png">
+<img src="/imagens/DER - Site Desenrola nos Vestibulares.jpg">
 
 
 ## 📋 3 - Modelagem Lógica
-<img src="/prints/print1.png">
+<img src="/imagens/Modelo Lógico - Desenrola Vestibulares.png">
 
 
 ## 🔧 4 - Modelagem Física
