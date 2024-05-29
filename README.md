@@ -62,7 +62,7 @@ Essas são algumas das funções que o site executará, sendo elas as mais relev
 <img src="/imagens/Modelo Lógico - Desenrola Vestibulares.png">
 
 
-## 🔧 4 - Modelagem Física
+## 🛠️ 4 - Modelagem Física
 ### Criação do BD e de suas Tabelas
 ```sql
 --- >>>>>> Criação do Banco de Dados com as Suas tabelas <<<<<< ---
@@ -266,21 +266,12 @@ create table Historico_Simulados(
 
 --Criando a tabela para o relacionamento N para N com as tabelas Historico_Simulados com as Questões
 create table HistoricoSimulados_Questoes(
-	ID_HistoricoSimulados	int not null,
-	ID_Questao				int not null,
+	ID_HistoricoSimulados	int			not null,
+	ID_Questao				int			not null,
+	Alt_Selecionada			varchar(2) not null,
 	foreign key(ID_Questao)				references Questoes(ID_Questao),
 	foreign key (ID_HistoricoSimulados)	references Historico_Simulados(ID_HistoricoSimulados),
 	constraint PK_HistQues primary key (ID_HistoricoSimulados,ID_Questao)
-);
-
-
---Criando a tabela para o relacionamento N para N com as tabelas Historico_Simulados com as Alternativas
-create table Hist_AltSelecionadas(
-	ID_HistoricoSimulados	int			not null,
-	ID_Alternativa			int			not null,
-	foreign key(ID_Alternativa)			references Alternativas(ID_Alternativa),
-	foreign key(ID_HistoricoSimulados)	references Historico_Simulados(ID_HistoricoSimulados),
-	constraint PK_HistAlt primary key (ID_HistoricoSimulados,ID_Alternativa)
 );
 
 
@@ -300,20 +291,11 @@ create table Simulados_Salvos(
 --Criando a tabela para o relacionamento N para N com as tabelas Simulados_Salvos com as Questões
 create table SimuladosSalvos_Questoes(
 	ID_SimuladoSalvo	int not null,
-	ID_Questao				int not null,
+	ID_Questao			int not null,
+	Alt_Selecionada		varchar(10) not null,
 	foreign key(ID_Questao)		references Questoes(ID_Questao),
 	foreign key(ID_SimuladoSalvo)	references Simulados_Salvos(ID_SimuladoSalvo),
 	constraint PK_SalvosQues primary key (ID_SimuladoSalvo,ID_Questao)
-);
-
-
---Criando a tabela para o relacionamento N para N com as tabelas Simulados_Salvos com as Alternativas
-create table SimuSalvos_AltSelecionadas(
-	ID_SimuladoSalvo	int			not null,
-	ID_Alternativa			int			not null,
-	foreign key(ID_Alternativa)			references Alternativas(ID_Alternativa),
-	foreign key(ID_SimuladoSalvo)	references Simulados_Salvos(ID_SimuladoSalvo),
-	constraint PK_SalvosAlt primary key (ID_SimuladoSalvo,ID_Alternativa)
 );
 ```
 
@@ -870,56 +852,30 @@ select * from Historico_Simulados;
 
 --Inserindo os dados do relacionamento N para N entre as tabelas Historico_Simulados e Questoes na tabela HistoricoSimulados_Questoes
 insert into HistoricoSimulados_Questoes values
-(2, 1), (2, 2), (2, 3), (2, 4), (2, 5),
-(3, 6), (3, 7), (3, 8), (3, 9), (3, 10), (3, 11),
-(4, 12), (4, 13), (4, 14), (4, 15), (4, 16),
-(5, 17), (5, 18), (5, 19), (5, 20), (5, 21), (5, 22),
-(6, 1), (6, 2), (6, 3), (6, 4), (6, 5),
-(7, 6), (7, 7), (7, 8), (7, 9), (7, 10),
-(8, 12), (8, 13), (8, 18), (8, 15), (8, 16),
-(9, 17), (9, 18), (9, 19), (9, 20), (9, 21), (9, 22),
-(10, 1), (10, 2), (10, 3), (10, 4), (10, 5),
-(11, 1), (11, 2), (11, 3), (11, 4), (11, 6), (11, 7), (11, 11), (11, 15), (11, 16),
-(12, 3), (12, 4), (12, 5), (12, 6), (12, 7),
-(13, 1), (13, 2), (13, 3), (13, 4), (13, 5),
-(14, 1), (14, 2), (14, 3), (14, 4), (14, 5),
-(15, 1), (15, 2), (15, 3), (15, 4), (15, 5),
-(16, 1), (16, 2), (16, 3), (16, 4), (16, 5),
-(17, 1), (17, 2), (17, 3), (17, 4), (17, 5),
-(18, 1), (18, 2), (18, 3), (18, 4), (18, 5),
-(19, 1), (19, 2), (19, 3), (19, 4), (19, 5),
-(20, 1), (20, 2), (20, 3), (20, 4), (20, 5),
-(1, 1), (1, 2), (1, 3), (1, 4), (1, 5);
+(2, 1, 'a'), (2, 2, 'b'), (2, 3, 'c'), (2, 4, 'd'), (2, 5, 'e'),
+(3, 6, 'a'), (3, 7, 'a'), (3, 8, 'c'), (3, 9, 'd'), (3, 10, 'b'), (3, 11, 'e'),
+(4, 12, 'e'), (4, 13, 'd'), (4, 14, 'c'), (4, 15, 'b'), (4, 16, 'a'),
+(5, 17, 'd'), (5, 18, 'b'), (5, 19, 'e'), (5, 20, 'c'), (5, 21, 'a'), (5, 22, 'b'),
+(6, 1, 'a'), (6, 2, 'b'), (6, 3, 'c'), (6, 4, 'd'), (6, 5, 'e'),
+(7, 6, 'e'), (7, 7, 'a'), (7, 8, 'b'), (7, 9, 'c'), (7, 10, 'd'),
+(8, 12, 'd'), (8, 13, 'c'), (8, 18, 'b'), (8, 15, 'a'), (8, 16, 'a'),
+(9, 17, 'b'), (9, 18, 'b'), (9, 19, 'c'), (9, 20, 'a'), (9, 21, 'd'), (9, 22, 'd'),
+(10, 1, 'a'), (10, 2, 'b'), (10, 3, 'c'), (10, 4, 'd'), (10, 5, 'e'),
+(11, 1, 'e'), (11, 2, 'd'), (11, 3, 'b'), (11, 4, 'a'), (11, 6, 'c'), (11, 7, 'd'), (11, 11, 'e'), (11, 15, 'e'), (11, 16, 'd'),
+(12, 3, 'd'), (12, 4, 'c'), (12, 5, 'e'), (12, 6, 'd'), (12, 7, 'c'),
+(13, 1, 'a'), (13, 2, 'b'), (13, 3, 'c'), (13, 4, 'd'), (13, 5, 'e'),
+(14, 1, 'e'), (14, 2, 'd'), (14, 3, 'c'), (14, 4, 'b'), (14, 5, 'a'),
+(15, 1, 'c'), (15, 2, 'a'), (15, 3, 'd'), (15, 4, 'e'), (15, 5, 'b'),
+(16, 1, 'c'), (16, 2, 'd'), (16, 3, 'e'), (16, 4, 'b'), (16, 5, 'a'),
+(17, 1, 'd'), (17, 2, 'e'), (17, 3, 'd'), (17, 4, 'c'), (17, 5, 'b'),
+(18, 1, 'e'), (18, 2, 'c'), (18, 3, 'c'), (18, 4, 'd'), (18, 5, 'c'),
+(19, 1, 'c'), (19, 2, 'd'), (19, 3, 'b'), (19, 4, 'e'), (19, 5, 'd'),
+(20, 1, 'a'), (20, 2, 'e'), (20, 3, 'a'), (20, 4, 'a'), (20, 5, 'e'),
+(1, 1, 'e'), (1, 2, 'b'), (1, 3, 'e'), (1, 4, 'b'), (1, 5, 'a');
 
 --Selecionado e mostrando as relações das tabelas citadas
 select * from HistoricoSimulados_Questoes;
 
-
---Inserindo os dados das relações N para N entre as tabelas Historico_Simulados e Alternativas na tabela Hist_AltSelecionadas
-insert into Hist_AltSelecionadas values
-(2, 1), (2, 6), (2, 13), (2, 20), (2, 24),
-(3, 28), (3, 32), (3, 38), (3, 44), (3, 48), (3, 52),
-(4, 57), (4, 63), (4, 69), (4, 75), (4, 77),
-(5, 82), (5, 86), (5, 92), (5, 99), (5, 105), (5, 108),
-(6, 4), (6, 8), (6, 13), (6, 18), (6, 22),
-(7, 26), (7, 31), (7, 39), (7, 45), (7, 49),
-(8, 57), (8, 61), (8, 86), (8, 74), (8, 77),
-(9, 84), (9, 88), (9, 94), (9, 98), (9, 102), (9, 106),
-(10, 3), (10, 6), (10, 11), (10, 18), (10, 21),
-(11, 3), (11, 6), (11, 11), (11, 18), (11, 21), (11, 33), (11, 52), (11, 74), (11, 76),
-(12, 11), (12, 16), (12, 22), (12, 26), (12, 32),
-(13, 1), (13, 7), (13, 11), (13, 16), (13, 21),
-(14, 2), (14, 8), (14, 12), (14, 17), (14, 22),
-(15, 3), (15, 9), (15, 13), (15, 18), (15, 23),
-(16, 4), (16, 10), (16, 14), (16, 19), (16, 24),
-(17, 5), (17, 6), (17, 15), (17, 20), (17, 25),
-(18, 1), (18, 7), (18, 11), (18, 16), (18, 26),
-(19, 2), (19, 8), (19, 12), (19, 17), (19, 27),
-(20, 3), (20, 9), (20, 13), (20, 18), (20, 28),
-(1, 4), (1, 10), (1, 14), (1, 19), (1, 29);
-
---Seleionando e mostrando os registros das relações entre as as tabelas citadas
-select * from Hist_AltSelecionadas;
 
 --Inserindo dados na tabela Simulados_Salvos
 insert into Simulados_Salvos values
@@ -950,60 +906,34 @@ select * from Simulados_Salvos;
 
 --Inserindo os dados do relacionamento N para N entre as tabelas Simulados_Salvos e Questoes na tabela SimuladosSalvos_Questoes
 insert into SimuladosSalvos_Questoes values
-(2, 1), (2, 2), (2, 3), (2, 4), (2, 5),
-(3, 6), (3, 7), (3, 8), (3, 9), (3, 10), (3, 11),
-(4, 12), (4, 13), (4, 14), (4, 15), (4, 16),
-(5, 17), (5, 18), (5, 19), (5, 20), (5, 21), (5, 22),
-(6, 1), (6, 2), (6, 3), (6, 4), (6, 5),
-(7, 6), (7, 7), (7, 8), (7, 9), (7, 10),
-(8, 12), (8, 13), (8, 18), (8, 15), (8, 16),
-(9, 17), (9, 18), (9, 19), (9, 20), (9, 21), (9, 22),
-(10, 1), (10, 2), (10, 3), (10, 4), (10, 5),
-(11, 1), (11, 2), (11, 3), (11, 4), (11, 6), (11, 7), (11, 11), (11, 15), (11, 16),
-(12, 3), (12, 4), (12, 5), (12, 6), (12, 7),
-(13, 1), (13, 2), (13, 3), (13, 4), (13, 5),
-(14, 1), (14, 2), (14, 3), (14, 4), (14, 5),
-(15, 1), (15, 2), (15, 3), (15, 4), (15, 5),
-(16, 1), (16, 2), (16, 3), (16, 4), (16, 5),
-(17, 1), (17, 2), (17, 3), (17, 4), (17, 5),
-(18, 1), (18, 2), (18, 3), (18, 4), (18, 5),
-(19, 1), (19, 2), (19, 3), (19, 4), (19, 5),
-(20, 1), (20, 2), (20, 3), (20, 4), (20, 5),
-(1, 1), (1, 2), (1, 3), (1, 4), (1, 5);
+(2, 1, 'a'), (2, 2, 'b'), (2, 3, 'c'), (2, 4, 'd'), (2, 5, 'e'),
+(3, 6, 'Nenhuma'), (3, 7, 'a'), (3, 8, 'c'), (3, 9, 'd'), (3, 10, 'b'), (3, 11, 'e'),
+(4, 12, 'e'), (4, 13, 'd'), (4, 14, 'c'), (4, 15, 'b'), (4, 16, 'a'),
+(5, 17, 'd'), (5, 18, 'Nenhuma'), (5, 19, 'e'), (5, 20, 'c'), (5, 21, 'a'), (5, 22, 'b'),
+(6, 1, 'a'), (6, 2, 'b'), (6, 3, 'c'), (6, 4, 'd'), (6, 5, 'e'),
+(7, 6, 'e'), (7, 7, 'a'), (7, 8, 'b'), (7, 9, 'c'), (7, 10, 'd'),
+(8, 12, 'Nenhuma'), (8, 13, 'Nenhuma'), (8, 18, 'Nenhuma'), (8, 15, 'Nenhuma'), (8, 16, 'Nenhuma'),
+(9, 17, 'b'), (9, 18, 'b'), (9, 19, 'c'), (9, 20, 'a'), (9, 21, 'd'), (9, 22, 'd'),
+(10, 1, 'a'), (10, 2, 'Nenhuma'), (10, 3, 'c'), (10, 4, 'd'), (10, 5, 'e'),
+(11, 1, 'Nenhuma'), (11, 2, 'd'), (11, 3, 'b'), (11, 4, 'a'), (11, 6, 'c'), (11, 7, 'd'), (11, 11, 'e'), (11, 15, 'Nenhuma'), (11, 16, 'Nenhuma'),
+(12, 3, 'd'), (12, 4, 'c'), (12, 5, 'e'), (12, 6, 'd'), (12, 7, 'c'),
+(13, 1, 'a'), (13, 2, 'b'), (13, 3, 'c'), (13, 4, 'd'), (13, 5, 'e'),
+(14, 1, 'e'), (14, 2, 'Nenhuma'), (14, 3, 'c'), (14, 4, 'b'), (14, 5, 'a'),
+(15, 1, 'c'), (15, 2, 'a'), (15, 3, 'd'), (15, 4, 'e'), (15, 5, 'b'),
+(16, 1, 'c'), (16, 2, 'd'), (16, 3, 'e'), (16, 4, 'b'), (16, 5, 'a'),
+(17, 1, 'd'), (17, 2, 'e'), (17, 3, 'd'), (17, 4, 'c'), (17, 5, 'b'),
+(18, 1, 'e'), (18, 2, 'c'), (18, 3, 'c'), (18, 4, 'd'), (18, 5, 'c'),
+(19, 1, 'c'), (19, 2, 'd'), (19, 3, 'b'), (19, 4, 'e'), (19, 5, 'd'),
+(20, 1, 'a'), (20, 2, 'e'), (20, 3, 'a'), (20, 4, 'a'), (20, 5, 'e'),
+(1, 1, 'e'), (1, 2, 'b'), (1, 3, 'e'), (1, 4, 'b'), (1, 5, 'a');
 
 --Selecionando e mostrando as relações entre as tabelas citadas
 select * from SimuladosSalvos_Questoes;
-
-
---Inserindo os dados das relações N para N entre as tabelas Simulados_Salvos e Alternativas na tabela SimuSalvos_AltSelecionadas
-insert into SimuSalvos_AltSelecionadas values
-(2, 1), (2, 6), (2, 13), (2, 20), (2, 24),
-(3, 28), (3, 32), (3, 38), (3, 44), (3, 48), (3, 52),
-(4, 57), (4, 63), (4, 69), (4, 75), (4, 77),
-(5, 82), (5, 86), (5, 92), (5, 99), (5, 105), (5, 108),
-(6, 4), (6, 8), (6, 13), (6, 18), (6, 22),
-(7, 26), (7, 31), (7, 39), (7, 45), (7, 49),
-(8, 57), (8, 61), (8, 86), (8, 74), (8, 77),
-(9, 84), (9, 88), (9, 94), (9, 98), (9, 102), (9, 106),
-(10, 3), (10, 6), (10, 11), (10, 18), (10, 21),
-(11, 3), (11, 6), (11, 11), (11, 18), (11, 21), (11, 33), (11, 52), (11, 74), (11, 76),
-(12, 11), (12, 16), (12, 22), (12, 26), (12, 32),
-(13, 1), (13, 7), (13, 11), (13, 16), (13, 21),
-(14, 2), (14, 8), (14, 12), (14, 17), (14, 22),
-(15, 3), (15, 9), (15, 13), (15, 18), (15, 23),
-(16, 4), (16, 10), (16, 14), (16, 19), (16, 24),
-(17, 5), (17, 6), (17, 15), (17, 20), (17, 25),
-(18, 1), (18, 7), (18, 11), (18, 16), (18, 26),
-(19, 2), (19, 8), (19, 12), (19, 17), (19, 27),
-(20, 3), (20, 9), (20, 13), (20, 18), (20, 28),
-(1, 4), (1, 10), (1, 14), (1, 19), (1, 29);
-
---Seleionando e mostrando os registros das relações entre as as tabelas citadas
-select * from SimuSalvos_AltSelecionadas;
 ```
 
-## 🔧 6 - CRUD
+## 🛠️ 6 - CRUD
 ### Inserção de dados
+#### Inserindo três usuários diferentes com todos os atributos:
 ```sql
 --- Crud - Inserção de dados na tabela Usuarios
 --- Inserindo três usuários diferentes com todos os atributos
@@ -1014,13 +944,21 @@ insert into Usuarios values
 
 --- Exibindo resultado:
 select * from Usuarios;
+```
+<img src="/imagens/crud/crud-insercao-alunos.png">
 
+#### Inserindo uma nova Questão:
+```sql
 --- Inserindo uma nova Questão com as suas Alternativas
 insert into Questoes values ('Questão teste 123', 2024, 'a', 5, 1);
 
 --- Exibindo resultado:
 select * from Questoes;
+```
+<img src="/imagens/crud/crud-insercao-questao.png">
 
+#### Inserindo as suas Alternativas:
+```sql
 insert into Alternativas values 
 ('a', 'Texto a', 'Texto', 23),
 ('b', 'Texto da alternativa b', 'Texto', 23),
@@ -1031,7 +969,7 @@ insert into Alternativas values
 --- Exibindo resultado:
 select * from Alternativas where ID_Questao = 23;
 ```
-<img src="/prints/print1.png">
+<img src="/imagens/crud/crud-insercao-alernativa.png">
 
 ### Leitura de Dados
 ```sql
@@ -1039,7 +977,7 @@ select * from Alternativas where ID_Questao = 23;
 --- Lendo os atributos Comentario, Data, Nota e ID do Usuario de todos os registros da tabela Avaliacoes dos Usuários
 select Comentario_Avaliacao, Dt_Avaliacao, Nota_Avaliacao, ID_Avaliacao from Avaliacoes;
 ```
-<img src="/prints/print1.png">
+<img src="/imagens/crud/crud-listagem-avaliacoes.png">
 
 ### Alteração de Dados
 ```sql
@@ -1050,9 +988,15 @@ update Simulados_Salvos set Nome_Simulado = 'Questões de Humanas da UNESP', Vis
 --- Exibindo resultado:
 select * from Simulados_Salvos;
 ```
-<img src="/prints/print1.png">
+
+#### Antes:
+<img src="/imagens/crud/crud-alteracao-simuladossalvos-antes.png">
+
+#### Depois:
+<img src="/imagens/crud/crud-alteracao-simuladossalvos-depois.png">
 
 ### Deleção de Dados
+#### Deleção das Alternativas:
 ```sql
 --- cruD - Deleção de Dados
 --- Deletando a Questão e as suas alternativas, cadastradas anteriormente, ID = 23;
@@ -1066,7 +1010,17 @@ delete Questoes where ID_Questao = 23;
 --- Exibindo resultado:
 select * from Questoes;
 ```
-<img src="/prints/print1.png">
+<img src="/imagens/crud/crud-delecao-alternativa.png">
+
+#### Deleção da Questão:
+```sql
+--- Deleção da Questão
+delete Questoes where ID_Questao = 23;
+
+--- Exibindo resultado:
+select * from Questoes;
+```
+<img src="/imagens/crud/crud-delecao-questao.png">
 
 
 
@@ -1077,63 +1031,61 @@ select * from Questoes;
 ```sql
 select Nome_Usuario, Nivel_Usuario, Dt_Nascimento from Usuarios where (Nivel_Usuario = 'Corretor' or Nivel_Usuario = 'ADM' or Nivel_Usuario = 'ADM Geral') order by Dt_Nascimento;
 ```
-<img src="/prints/print1.png">
+<img src="/imagens/relatorios/1relatorio-niviessuperiores.png">
 
 2) Selecionando o Nome, Nível e Status de todos os Usuários que são Alunos e que não estão banidos, começando pelos mais antigos de registro, ou seja, do ID menor pro maior
 ```sql
 select Nome_Usuario, Nivel_Usuario, Status_Usuario from Usuarios where Nivel_Usuario = 'Aluno' and Status_Usuario != 'Banido' order by ID_Usuario;
 ```
-<img src="/prints/print1.png">
+<img src="/imagens/relatorios/2relatorio-alunosativos.png">
 
 3) Selecionando todas as alternativas que pertencem a um quetão, cuja o seu ID é 18.
 ```sql
 select * from Alternativas where ID_Questao = 18;
 ```
-<img src="/prints/print1.png">
+<img src="/imagens/relatorios/3relatorio-alternativasques.png">
 
 4) Selecionando a alternativa C dessa mesma questão.
 ```sql
 select * from Alternativas where ID_Questao = 18 and Alternativa = 'c';
 ```
-<img src="/prints/print1.png">
+<img src="/imagens/relatorios/4relatorio-alternativac.png">
 
 5) Selecionando todas as redações de um usuário de código = 11, ordenadas pela data de envio.
 ```sql
 select * from Redacoes where ID_Usuario = 11 order by Dt_Envio;
 ```
-<img src="/prints/print1.png">
+<img src="/imagens/relatorios/5relatorio-redacao11.png">
 
 6) Selecionando todas as correções da primeira redação exibida (ID = 19), caso haja - Nesse caso não haverá nenhuma correção.
 ```sql
 select * from Correcoes_Redacoes where ID_Redacao = 19;
 ```
-<img src="/prints/print1.png">
+<img src="/imagens/relatorios/6relatorio-correcao19.png">
 
 7) Selecionando todos os ID's das questões que são de sociologia (ID = 8).
 ```sql
 select * from Disciplinas_Questoes where ID_Disciplina = 8;
 ```
-<img src="/prints/print1.png">
+<img src="/imagens/relatorios/7relatorio-questoes8.png">
 
 8) Selecionando todas as operações efetuadas pelo usuário de ID = 8, ordenados pela operação mais recente.
 ```sql
 select * from Historico_Operacoes where ID_Usuario = 8 order by Dt_Operacao desc;
 ```
-<img src="/prints/print1.png">
+<img src="/imagens/relatorios/8relatorio-usuario8.png">
 
 9) Selecionando as questões que estão salvas no simulado salvo de ID = 20.
 ```sql
 select * from SimuladosSalvos_Questoes where ID_SimuladoSalvo = 20;
 ```
-<img src="/prints/print1.png">
+<img src="/imagens/relatorios/9relatorio-questoessimu20.png">
 
 10) Selecionando as alternativas preenchidas pelo usuário desse mesmo simulado.
 ```sql
-select * from SimuSalvos_AltSelecionadas where ID_SimuladoSalvo = 20;
+select * from SimuladosSalvos_Questoes where ID_SimuladoSalvo = 20 and Alt_Selecionada != 'Nenhuma';
 ```
-<img src="/prints/print1.png">
-
-## 📦 Aparência
+<img src="/imagens/relatorios/10relatorio-altselecionada.png">
 
 ## 🚀 Obter cópia
 
